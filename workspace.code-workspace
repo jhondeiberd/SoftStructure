@@ -4,5 +4,13 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {},
+	"extensions": {
+		"recommendations": [
+			"ritwickdey.liveserver",
+			"dbaeumer.vscode-eslint",
+			"editorconfig.editorconfig",
+			"vscode-icons-team.vscode-icons"
+		]
+	}
 }

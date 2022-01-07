@@ -1,0 +1,23 @@
+{
+    "name": "web_server_0",
+    "version": "1.0.0",
+    "description": "first node project",
+    "main": "hello.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node hello.js",
+        "hello_extra": "node hello.js && echo 'Hello world'",
+        "my-script1": "echo \"Execution of my first script\"",
+        "my-script2": "npm run my-script1 && node hello.js"
+    },
+    "author": "Jhon Diaz",
+    "license": "ISC",
+    "devDependencies": {
+        "eslint": "^7.32.0",
+        "eslint-config-standard": "^16.0.3",
+        "eslint-plugin-import": "^2.25.4",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^6.0.0",
+        "eslint-plugin-standard": "^5.0.0"
+    }
+}
