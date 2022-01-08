@@ -2,13 +2,10 @@
     "name": "web_server_0",
     "version": "1.0.0",
     "description": "first node project",
-    "main": "hello.js",
+    "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node hello.js",
-        "hello_extra": "node hello.js && echo 'Hello world'",
-        "my-script1": "echo \"Execution of my first script\"",
-        "my-script2": "npm run my-script1 && node hello.js"
+        "hello_extra": "node hello.js && echo 'Hello world'"
     },
     "author": "Jhon Diaz",
     "license": "ISC",
