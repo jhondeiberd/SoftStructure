@@ -13,16 +13,20 @@
 
 // console.log('server listening on port 8000')
 
+const path = require('path')
 const express = require('express')
-// const { read } = require('fs')
 const app = express()
+
+// use CORS to allow
+const cors = require('cors')
+app.use(cors())
+
+// const { read } = require('fs')
 app.set('view engine', 'ejs')
 
 // server page in public_html directly
 
 app.use(express.static('public_html'))
-
-const path = require('path')
 
 app.get('/chair',
     function (req, res) {
@@ -314,5 +318,20 @@ app.delete('/customers/:id', function (request, response) {
         response.writeHead(200, { 'Content-Type': 'text/html' })
         // send out a string
         response.end('OK customer deleted')
+    })
+})
+
+// server responds with the list of employees in a JSON string
+app.get('/employees', function (request, response) {
+    const DB = require('./src/dao')
+    DB.connect()
+    DB.query('SELECT * from employees', function (employees) {
+        const employeesJSON = { employees: employees.rows } // keep only the data records rows
+        // convert JSON to JSON data string
+        const employeesJSONString = JSON.stringify(employeesJSON, null, 4)
+        // set HTTP response content type for JSON
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        // send out the JSON data string
+        response.end(employeesJSONString)
     })
 })

@@ -1,0 +1,16 @@
+GET http://localhost:8000/customers HTTP/1.1
+
+###
+DELETE  http://localhost:8000/customers/125 HTTP/1.1
+
+###
+POST http://localhost:8000/form_validate HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+username=toto&password=12345678
+
+###
+PUT http://localhost:8000/customers HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+customernumber=102&customername=JhonD&contactlastname=Diaz&contactfirstname=Jhon&phone=44.32.2555=addressline1=668, rue Royale&addressline2=null&city=Montreal&state=null&postalcode=55000&country=Canada&salesrepemployeenumber=1370&creditlimit=21000.00
