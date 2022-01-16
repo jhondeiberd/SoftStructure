@@ -1,5 +1,3 @@
-/* eslint-disable no-throw-literal */
-const { table } = require('console')
 const fs = require('fs')
 
 function getTable (fileName) {
@@ -9,12 +7,14 @@ function getTable (fileName) {
 }
 
 function getRec (fileName, id) {
-    const tbl = getTable(fileName)
-    for (let i = 0; i < tbl.length; i++) {
-        if (tbl[i].id === id) {
-            return tbl[i]
+    const table = getTable(fileName)
+    for (let i = 0; i < table.length; i++) {
+        if (table[i].id === id) {
+            return table[i]
         }
     }
+    // throw new Error('id is not existing')
+    return {}
 }
 
 function saveTable (fileName, table) {
@@ -23,28 +23,28 @@ function saveTable (fileName, table) {
 }
 
 function addRec (fileName, rec) {
-    const tbl = getTable(fileName)
-    for (let i = 0; i < tbl.length; i++) {
-        if (tbl[i].id === rec) {
-            throw 'id does not existing'
+    const table = getTable(fileName)
+    for (let i = 0; i < table.length; i++) {
+        if (table[i].id === rec.id) {
+            return false
         }
     }
-    tbl.push(rec)
+    table.push(rec)
     saveTable(fileName, table)
+    return true
 }
 
 function updateRec (fileName, rec) {
-    const tbl = getTable(fileName)
-    for (let i = 0; i < tbl.length; i++) {
-        if (tbl[i].id === rec.id) {
-            tbl[i] = rec
-            saveTable(fileName, tbl)
-        } else {
-            throw 'id does not existing'
-        }
+    const table = getTable(fileName)
+    let i = 0
+    while (i < table.length && table[i].id !== rec.id) {
+        i++
+    } if (i !== table.length) {
+        table[i] = rec
+        saveTable(fileName, table)
+    } else {
+        throw new Error('id does not existing')
     }
-    tbl.push(rec)
-    saveTable(fileName, table)
 }
 
 // function getTableAsync (filaName) {
@@ -55,6 +55,7 @@ function updateRec (fileName, rec) {
 // }
 
 // Public interface of the module
+
 module.exports = {
     getTable: getTable,
     getRec: getRec,

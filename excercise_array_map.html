@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>id = tblArray</title>
+    <div>id = "demo" </div>
+</head>
+
+<body>
+    <h1>This is a test</h1>
+</body>
+
+<script>
+    //Excercise 7 Moodel
+
+    const USER_ARRAY = [
+        { id: 1, name: 'Martin', age: 45 },
+        { id: 2, name: 'Pierre', age: 15 },
+        { id: 3, name: 'Josee', age: 14 },
+        { id: 4, name: 'Melanie', age: 32 },
+        { id: 5, name: 'Sonia', age: 24 }
+    ]
+
+    // Exercise 1 - Remove the age property from all objects in the array and show result on the server console.Result shall be:
+    // [
+    //     { id: 1, name: 'Martin' },
+    //     { id: 2, name: 'Pierre' },
+    //     { id: 3, name: 'Josee' },
+    //     { id: 4, name: 'Melanie' },
+    //     { id: 5, name: 'Sonia' }
+    // ]
+
+    let ex1 = (oneUser) => {
+        return { "id": oneUser.id, "name": oneUser.name }
+    }
+
+    result = USER_ARRAY.map(ex1)
+    console.log(result)
+
+    // Exercise 2 - Keep only objects in the array whose age property is greater than 15 and show result on the console.Result shall be:
+    // [
+    //     { id: 1, name: 'Martin', age: 45 },
+    //     { id: 4, name: 'Melanie', age: 32 },
+    //     { id: 5, name: 'Sonia', age: 24 }
+    // ]
+    let ex2 = (filterMtx) => {
+        return (filterMtx.age > 15)
+    }
+
+    result = USER_ARRAY.filter(ex2)
+    console.log(result)
+
+    // Exercise 3 - Calculate the average age of all objects in the array and show average on the console.Result shall be: 26
+
+    let ex3 = (total, avgMtx) => {
+        return total + avgMtx.age
+    }
+
+    result = USER_ARRAY.reduce(ex3, 0)
+    result = result / USER_ARRAY.length
+    console.log(result)
+
+    // Exercise 4 - Show table in html
+    let tblArray = (oneUser) => {
+        return '<tr><td>' + oneUser.id + '</td><td>' + oneUser.name + '</td><td>' + oneUser.age + '</td></tr>'
+    }
+
+    let tbl = USER_ARRAY.map(tblArray)
+    console.log(tbl)
+
+    let arrayToString = (string, oneString) => {
+        return string + oneString
+    }
+
+    result = tbl.reduce(arrayToString, '')
+    result = '<table>' + result + '</table>'
+    document.getElementById("demo").innerHTML = result
+
+</script>
+
+</html>
