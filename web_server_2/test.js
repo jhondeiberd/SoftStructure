@@ -29,16 +29,18 @@ console.log(users)
 tableinfile.saveTable('users.json', users)
 
 // console.log('getRec')
-// let rec = tableinfile.getRec('users.json', 101)
-// assert.deepStrictEqual(rec, { id: 101, userName: 'jcote', age: 66 })
-// console.log(rec)
+const rec = tableinfile.getRec('users.json', 101)
+assert.deepStrictEqual(rec, { id: 101, userName: 'jcote', age: 66 })
+console.log(rec)
 
 users = tableinfile.getTable('users.json')
 
-console.log('addRec')
-const newUser = tableinfile.addRec('users.json', { id: 777, userName: 'Valery', age: 10 })
-assert(users.lenght === 5)
-console.log(newUser)
+// tableinfile.addRec('users.json', { id: 888, userName: 'ValeryDiaz', age: 10 })
+// assert(users.lenght === 5)'
+
+// tableinfile.updateRec('users.json', { id: 888, userName: 'ValeryD', age: 11 })
+
+tableinfile.deleteRec('users.json', 888)
 
 // tableinfile.updateRec('users.json', { id: 111, userName: 'JhonD', age: 40 })
 // rec = tableinfile.getRec('users.json')

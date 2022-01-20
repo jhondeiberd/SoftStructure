@@ -60,10 +60,27 @@ app.post('/users', function (req, res) {
 
 // update a user by id
 app.put('/users/:id', function (req, res) {
-
+    console.log(req.body)
+    if (tableinfile.updateRec(filaName, req.body)) {
+        res.statusMessage = 'User updated' // custom error message if required
+        res.writeHead(200, { 'Content-type': 'application/json' })
+        res.end('{}')
+    } else {
+        res.statusMessage = 'User is not exist' // custom error message if required
+        res.writeHead(403, { 'Content-type': 'application/json' })
+        res.end('{}')
+    }
 })
 
 // delete user by id
 app.delete('/users/:id', function (req, res) {
-
+    if (tableinfile.deleteRec(filaName, Number(req.params.id))) {
+        res.statusMessage = 'The User was deleted' // custom error message if required
+        res.writeHead(200, { 'Content-type': 'application/json' })
+        res.end('{}')
+    } else {
+        res.statusMessage = 'User is not exist' // custom error message if required
+        res.writeHead(403, { 'Content-type': 'application/json' })
+        res.end('{}')
+    }
 })

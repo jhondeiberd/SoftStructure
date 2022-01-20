@@ -13,7 +13,6 @@ function getRec (fileName, id) {
             return table[i]
         }
     }
-    // throw new Error('id is not existing')
     return {}
 }
 
@@ -43,23 +42,30 @@ function updateRec (fileName, rec) {
         table[i] = rec
         saveTable(fileName, table)
     } else {
-        throw new Error('id does not existing')
+        // throw new Error('id does not existing')
     }
 }
 
-// function getTableAsync (filaName) {
-//     fs.readFile(filaName, 'utf8', function(tblString){
-//         const tblJSON = JSON.parse(tableString)
-//         return tblJSON
-//     })
-// }
+function deleteRec (fileName, id) {
+    const table = getTable(fileName)
+    let i = 0
+    while (i < table.length && table[i].id !== id) {
+        i++
+    } if (i !== table.length) {
+        table.splice(i, 1)
+        saveTable(fileName, table)
+        return true
+    } else {
+        return false
+    }
+}
 
 // Public interface of the module
-
 module.exports = {
     getTable: getTable,
     getRec: getRec,
     saveTable: saveTable,
     addRec: addRec,
-    updateRec: updateRec
+    updateRec: updateRec,
+    deleteRec: deleteRec
 }
