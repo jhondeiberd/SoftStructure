@@ -1,0 +1,14 @@
+label {
+    display: inline-block;
+    text-align: right;
+    width: 100px;
+}
+
+input {
+    width: 200px;
+}
+
+td,
+th {
+    border: 1px solid black;
+}

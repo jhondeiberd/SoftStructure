@@ -48,13 +48,13 @@ app.get('/users/:id', function (req, res) {
 app.post('/users', function (req, res) {
     console.log(req.body)
     if (tableinfile.addRec(filaName, req.body)) {
-        res.statusMessage = 'All ok' // custom error message if required
+        res.statusMessage = 'User created' // custom error message if required
         res.writeHead(200, { 'Content-type': 'application/json' })
-        res.end({})
+        res.end('{}')
     } else {
         res.statusMessage = 'User alredy exist' // custom error message if required
         res.writeHead(403, { 'Content-type': 'application/json' })
-        res.end({})
+        res.end('{}')
     }
 })
 
