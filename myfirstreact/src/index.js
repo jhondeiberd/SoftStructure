@@ -13,7 +13,6 @@ import SelectList from './SelectList.js'
 //     return <footer>test</footer>
 // }
 
-// const CustomerId = 56
 const provinces=[ {code:'QC',name:'Quebec'},{code:'ON',name:'Ontario'},{code:'NB',name:'New-Brunswick'}]
 
 const countries=[{code:'CA',name:'Canada'},{code:'US',name:'USA'},{code:'IN',name:'India'},{code:'MX',name:'Mexixo'}]

@@ -5,7 +5,7 @@ class SelectList extends React.Component {
         super(props)
     }
 
-    myFunction(oneItem, index){
+    myList(oneItem, index){
         return (
             <option key={index} value={oneItem.code}>
                 {oneItem.name}
@@ -16,11 +16,10 @@ class SelectList extends React.Component {
     render(){
         return(
             <select>
-                {this.props.array.map(this.myFunction)}
+                {this.props.array.map(this.myList)}
             </select>
         )
     }
 }
-
 export default SelectList
 

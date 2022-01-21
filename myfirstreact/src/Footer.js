@@ -6,11 +6,17 @@ class Footer extends React.Component {
     }
 
     render(){
-        return(
-            <footer>
-                {this.props.authorName}
-            </footer>
-        )
+        if(this.props.authorName){
+            return(
+                <footer>
+                    {this.props.authorName}
+                </footer>
+            )
+        } else {
+            return(
+                <footer>Error authorName props not provided</footer>
+            )
+        }
     }
 }
 

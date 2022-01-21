@@ -4,13 +4,18 @@ class Header extends React.Component {
     constructor (props) {
         super(props)
     }
-
     render(){
-        return(
-            <header>
-                {this.props.companyName}
-            </header>
-        )
+        if(this.props.companyName){
+            return(
+                <header>
+                    {this.props.companyName}
+                </header>
+            )
+        } else {
+            return(
+                <header>Error companyName props not provided</header>
+            )
+        }
     }
 }
 
