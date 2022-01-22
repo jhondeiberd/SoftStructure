@@ -12,14 +12,10 @@ code {
     monospace;
 }
 
-footer {
-    background-color: blue;
-    background-color: cyan;
-    color: white;
+tbody {
+    text-align: left;
 }
 
-
-header {
-    background-color: orange;
-    color: white;
+table, th, td {
+    border: 1px solid black;
 }

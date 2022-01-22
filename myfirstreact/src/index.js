@@ -4,9 +4,11 @@ import './index.css'
 import reportWebVitals from './reportWebVitals'
 
 import Nav from './Nav.js'
-import Header from './Header.js'
+// import Header from './Header.js'
 import Footer from './Footer.js'
 import SelectList from './SelectList.js'
+import HeaderWithButton from './HeaderWithButton.js'
+import LoginForm from './LoginForm.js'
 
 // function React Component
 // function Footer () {
@@ -21,20 +23,23 @@ class Page extends React.Component{
     render(){
         return (
         <div>
-            <Header companyName="Company1" />
+            <HeaderWithButton companyName="Company1" />
             <p>Hello World !</p>
             <SelectList array={provinces} />
             <SelectList array={countries}/>
+            <br/><br/>
+            <LoginForm username="JhonD" pw="123456" />
+            <br/>
             <Footer authorName="Jhon Diaz"/>
         </div>
         )
     }
 }
 
-  ReactDOM.render(
-      <Page />,
-      document.getElementById('root')
-  )
+ReactDOM.render(
+    <Page />,
+    document.getElementById('root')
+)
 
 // const myH1 = <h1>Hello</h1>
 
