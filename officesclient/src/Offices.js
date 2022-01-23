@@ -113,6 +113,18 @@ class Offices extends React.Component {
         }
     )}
 
+    ClearTable=() => {
+        document.getElementById('newofficecode').value = ""
+        document.getElementById('newcity').value = ""
+        document.getElementById('newphone').value = ""
+        document.getElementById('newaddressline1').value = ""
+        document.getElementById('newaddressline2').value = ""
+        document.getElementById('newstate').value = ""
+        document.getElementById('newcountry').value = ""
+        document.getElementById('newpostalcode').value = ""
+        document.getElementById('newterritory').value = ""
+    }
+
 
     // display the offices table
     render() {
@@ -126,24 +138,24 @@ class Offices extends React.Component {
                         <b>List of offices from server localhost:8000/offices</b><br/><br/>
                         <table className={styles.table}>
                             <tbody>
-                            <tr className={styles.tr}><th className={styles.th}>Office code</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].officecode} </td></tr>
-                            <tr><th className={styles.th}>City</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].city}</td></tr>
-                            <tr><th className={styles.th}>Phone</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].phone}</td></tr>
-                            <tr><th className={styles.th}>Addressline1</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].addressline1}</td></tr>
-                            <tr><th className={styles.th}>Addressline2</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].addressline2}</td></tr>
-                            <tr><th className={styles.th}>State</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].state}</td></tr>
-                            <tr><th className={styles.th}>Country</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].country}</td></tr>
-                            <tr><th className={styles.th}>Postalcode</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].postalcode}</td></tr>
-                            <tr><th className={styles.th}>Territory</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].territory}</td></tr>
+                            <tr><th className={styles.th}>Office code</th><td className={styles.td}> <input type="text" name="newofficecode" id="newofficecode" value={this.state.offices_data[this.state.offices_index].officecode} onChange={(event)=>this.handleChange(event)} /> </td></tr>
+                            <tr><th className={styles.th}>City</th><td className={styles.td}> <input type="text"  name="newcity" id="newcity" value={this.state.offices_data[this.state.offices_index].city} onChange={(event)=>this.handleChange(event)}/></td></tr>
+                            <tr><th className={styles.th}>Phone</th><td className={styles.td}> <input type="text" name="newphone" id="newphone" value={this.state.offices_data[this.state.offices_index].phone} onChange={(event)=>this.handleChange(event)}/></td></tr>
+                            <tr><th className={styles.th}>Addressline1</th><td className={styles.td}> <input type="text" name="newaddressline1" id="newaddressline1" value={this.state.offices_data[this.state.offices_index].addressline1} onChange={(event)=>this.handleChange(event)}/></td></tr>
+                            <tr><th className={styles.th}>Addressline2</th><td className={styles.td}> <input type="text" name="newaddressline2" id="newaddressline2" value={this.state.offices_data[this.state.offices_index].addressline2} onChange={(event)=>this.handleChange(event)}/></td></tr>
+                            <tr><th className={styles.th}>State</th><td className={styles.td}> <input type="text" name="newstate" id="newstate" value={this.state.offices_data[this.state.offices_index].state} onChange={(event)=>this.handleChange(event)}/></td></tr>
+                            <tr><th className={styles.th}>Country</th><td className={styles.td}> <input type="text" name="newcountry"  id="newcountry" value={this.state.offices_data[this.state.offices_index].country} onChange={(event)=>this.handleChange(event)}/></td></tr>
+                            <tr><th className={styles.th}>Postalcode</th><td className={styles.td}> <input type="text" name="newpostalcode" id="newpostalcode" value={this.state.offices_data[this.state.offices_index].postalcode} onChange={(event)=>this.handleChange(event)}/></td></tr>
+                            <tr><th className={styles.th}>Territory</th><td className={styles.td}> <input type="text" name="newterritory" id="newterritory" value={this.state.offices_data[this.state.offices_index].territory} onChange={(event)=>this.handleChange(event)}/></td></tr>
                             </tbody>
                         </table>
                             <button className={styles.button} onClick={()=>this.Prev()}>Prev</button>
-                            <label >6 to 8</label>
+                            <label> {this.state.offices_index+1} to {this.state.offices_data.length}</label>
                             <button className={styles.button} onClick={()=>this.Next()}>Next</button><br/>
 
-                            <button className={styles.button} onClick={()=>this.Save()}>Save</button>
+                            <button className={styles.button} onClick={()=>this.handleChange()}>Save</button>
                             <button className={styles.button} onClick={()=>this.Delete()}>Delete</button>
-                            <button className={styles.button} onClick={()=>this.Add()}>Clear form to add a new office</button>
+                            <button className={styles.button} onClick={()=>this.ClearTable()}>Clear form to add a new office</button>
                     </div>
                 )
             }else{
