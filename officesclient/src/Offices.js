@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Offices.module.css'
 
 /**
 * offices components
@@ -8,6 +9,7 @@ import React from 'react';
 class Offices extends React.Component {
     constructor(props) {
       super(props);
+      this.handleChange = this.handleChange.offices_index
 
       // set initial state
       // do not use setState in constructor, write state directly
@@ -77,6 +79,40 @@ class Offices extends React.Component {
         )
     }
 
+    Prev=() => {
+        if (this.state.offices_index === 0) {
+            this.setState({offices_index:this.offices_index =0})
+        } else {
+            this.setState({offices_index:this.state.offices_index -1})
+        }
+    }
+
+    Next=() => {
+        console.log(this.state.offices_data.length)
+        if (this.state.offices_index === this.state.offices_data.length-1) {
+            this.setState({offices_index:this.offices_index = this.state.offices_index})
+        } else {
+            this.setState({offices_index:this.state.offices_index +1})
+        }
+    }
+
+    handleChange = (event) => {
+        const i=this.state.offices_index
+        this.setState(state => {
+            const list = state.offices_data.map((office, j) => {
+                if (j === i) {
+                office[event.target.name]=event.target.value
+                return office;
+                } else {
+                return office;
+                }
+            });
+            return {
+            list,
+          };
+        }
+    )}
+
 
     // display the offices table
     render() {
@@ -86,21 +122,28 @@ class Offices extends React.Component {
             if(this.state.offices_count!==0){
                 // office table not empty
                 return (
-                    <div>
+                    <div className={styles.panel300}>
                         <b>List of offices from server localhost:8000/offices</b><br/><br/>
-                        <table>
+                        <table className={styles.table}>
                             <tbody>
-                            <tr><th>Office code</th><td>{this.state.offices_data[this.state.offices_index].officecode}</td></tr>
-                            <tr><th>City</th><td>{this.state.offices_data[this.state.offices_index].city}</td></tr>
-                            <tr><th>Phone</th><td>{this.state.offices_data[this.state.offices_index].phone}</td></tr>
-                            <tr><th>Addressline1</th><td>{this.state.offices_data[this.state.offices_index].addressline1}</td></tr>
-                            <tr><th>Addressline2</th><td>{this.state.offices_data[this.state.offices_index].addressline2}</td></tr>
-                            <tr><th>State</th><td>{this.state.offices_data[this.state.offices_index].state}</td></tr>
-                            <tr><th>Country</th><td>{this.state.offices_data[this.state.offices_index].country}</td></tr>
-                            <tr><th>Postal code</th><td>{this.state.offices_data[this.state.offices_index].postalcode}</td></tr>
-                            <tr><th>Territory</th><td>{this.state.offices_data[this.state.offices_index].territory}</td></tr>
+                            <tr className={styles.tr}><th className={styles.th}>Office code</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].officecode} </td></tr>
+                            <tr><th className={styles.th}>City</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].city}</td></tr>
+                            <tr><th className={styles.th}>Phone</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].phone}</td></tr>
+                            <tr><th className={styles.th}>Addressline1</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].addressline1}</td></tr>
+                            <tr><th className={styles.th}>Addressline2</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].addressline2}</td></tr>
+                            <tr><th className={styles.th}>State</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].state}</td></tr>
+                            <tr><th className={styles.th}>Country</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].country}</td></tr>
+                            <tr><th className={styles.th}>Postalcode</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].postalcode}</td></tr>
+                            <tr><th className={styles.th}>Territory</th><td className={styles.td}>{this.state.offices_data[this.state.offices_index].territory}</td></tr>
                             </tbody>
                         </table>
+                            <button className={styles.button} onClick={()=>this.Prev()}>Prev</button>
+                            <label >6 to 8</label>
+                            <button className={styles.button} onClick={()=>this.Next()}>Next</button><br/>
+
+                            <button className={styles.button} onClick={()=>this.Save()}>Save</button>
+                            <button className={styles.button} onClick={()=>this.Delete()}>Delete</button>
+                            <button className={styles.button} onClick={()=>this.Add()}>Clear form to add a new office</button>
                     </div>
                 )
             }else{

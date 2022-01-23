@@ -1,0 +1,17 @@
+header {
+    background-color: blue;
+    color: white;
+    text-align: right;
+}
+
+button {
+    width: 70px;
+    background-color: green;
+    color: white;
+    text-align: left;
+}
+
+input {
+    width: 150px;
+    text-align: left;
+}

@@ -1,0 +1,25 @@
+.panel300 {
+    background-color: gray;
+    width: 400px;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+.table {
+    border: 1px solid black;
+}
+
+.th {
+    border: 1px solid black;
+}
+
+.td {
+    border: 1px solid black;
+}
+
+.button  {
+    background-color: white;
+    width: auto;
+    color: black;
+    text-align: middle;
+}
