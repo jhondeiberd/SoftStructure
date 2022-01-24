@@ -31,7 +31,7 @@ app.get('/', function (req, res) {
 app.get('/track', (req, res) => {
     const DB = require('./src/dao')
     DB.connect()
-    DB.query('select * from track', (track) => {
+    DB.query('select * from track order by id asc', (track) => {
         if (track.rowCount > 0) {
             const trackJSON = { msg: 'All tracks', track: track.rows } // keep only the data records rows
             const trackJSONString = JSON.stringify(trackJSON, null, 4) // convert JSON to JSON data string
@@ -109,21 +109,21 @@ app.post('/track',
 
 // // Delete an office
 // // DELETE
-// app.delete('/offices/:id', function (request, response) {
-//     const id = request.params.id // read the :id value send in the URL
-//     const DB = require('./src/dao')
-//     DB.connect()
+app.delete('/track/:id', function (request, response) {
+    const id = request.params.id // read the :id value send in the URL
+    const DB = require('./src/dao')
+    DB.connect()
 
-//     DB.queryParams('DELETE from offices WHERE officecode=$1', [id], function (offices) {
-//         const officesJSON = { msg: 'OK office deleted' }
-//         const officesJSONString = JSON.stringify(officesJSON, null, 4)
-//         // set content type
-//         response.writeHead(200, { 'Content-Type': 'application/json' })
-//         // send out a string
-//         response.end(officesJSONString)
-//         DB.disconnect()
-//     })
-// })
+    DB.queryParams('DELETE from track WHERE id=$1', [id], function (offices) {
+        const officesJSON = { msg: 'OK office deleted' }
+        const officesJSONString = JSON.stringify(officesJSON, null, 4)
+        // set content type
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        // send out a string
+        response.end(officesJSONString)
+        DB.disconnect()
+    })
+})
 
 app.listen(8000,
     function () {

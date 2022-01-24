@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Header from './Header'
 import Footer from './Footer'
+import Playlist from './playlist';
 
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
          <Header name='Welcome to Music Playlist Manager' />
-
+        <Playlist />
          <Footer />
 
   </React.StrictMode>,

@@ -15,8 +15,6 @@ function connect () {
     DB.connect((error) => {
         if (error) {
             console.log('Database connection error', error.stack)
-        } else {
-            console.log('Database connected')
         }
     })
 }
