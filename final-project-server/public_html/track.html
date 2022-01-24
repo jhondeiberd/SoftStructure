@@ -8,8 +8,8 @@
 
 <body>
     <h4>My Playlist</h4>
-    <button onclick="getTracks()">Get all offices</button><br>
-    <div id="trackslist"></div>
+    <button onclick="getTracks()">Get all</button><br>
+    <div id="trackslist">test</div>
 </body>
 
 </html>
@@ -29,7 +29,7 @@
                 (res) => {
                     // TO DO how to handle code other than 200 because this gets
                     // executed in all cases
-                    let tracks = res.tracks;
+                    let tracks = res.track;
                     console.log(tracks)
                     let html = ''
                     html += '<table>'
@@ -54,26 +54,25 @@
             )
     }
 
-    // function DeleteOffice() {
-    //     document.getElementById("status").innerHTML = "Waiting for server"
-    //     fetch("http://localhost:8000/offices/" + document.getElementById('officecode').value,
-    //         {
-    //             method: 'DELETE'
-    //             //,body: JSON.stringify(someData)// data to send in the body of the request
-    //         }
-    //     )
-    //         .then(res => res.json())//here server sends JSON response
-    //         .then(
-    //             (response) => {
-    //                 // TO DO how to handle code other than 200 because this gets
-    //                 // exeucted in all cases
-    //                 ClearForm()
-    //                 document.getElementById("status").innerHTML = response.msg
-    //             },
-    //             (error) => {
-    //                 // only NO RESPONSE URL errors will trigger this code
-    //                 document.getElementById("status").innerHTML = "AJAX error: URL wrong or unreachable, see console"
-    //             }
-    //         )
-    // }// end of OfficeDelete() function
+    function DeleteTrack() {
+        document.getElementById("status").innerHTML = "Waiting for server"
+        fetch("http://localhost:8000/track/" + document.getElementById('id').value,
+            {
+                method: 'DELETE'
+                //,body: JSON.stringify(someData)// data to send in the body of the request
+            }
+        )
+            .then(res => res.json())//here server sends JSON response
+            .then(
+                (res) => {
+                    // TO DO how to handle code other than 200 because this gets
+                    // exeucted in all cases
+                    document.getElementById("status").innerHTML = response.msg
+                },
+                (error) => {
+                    // only NO RESPONSE URL errors will trigger this code
+                    document.getElementById("status").innerHTML = "AJAX error: URL wrong or unreachable, see console"
+                }
+            )
+    }
 </script>
