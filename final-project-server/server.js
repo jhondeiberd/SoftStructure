@@ -7,12 +7,6 @@ const app = express()
 const cors = require('cors')
 app.use(cors())
 
-app.listen(8000,
-    function () {
-        console.log('Node server listening on port 8000')
-    }
-)
-
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded())
 
@@ -130,3 +124,9 @@ app.post('/track',
 //         DB.disconnect()
 //     })
 // })
+
+app.listen(8000,
+    function () {
+        console.log('Node server listening on port 8000')
+    }
+)
