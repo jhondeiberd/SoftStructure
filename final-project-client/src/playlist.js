@@ -52,7 +52,7 @@ class Playlist extends React.Component {
 
     DeleteData=(id)=>{
         //this.setState({[event.target.name]:event.target.value})
-        console.log(id)
+
         let url='http://localhost:8000/track/'+ id
         console.log(url)
         fetch(url,
@@ -71,13 +71,37 @@ class Playlist extends React.Component {
 
     }
 
+    SearchDataThroughAPI=()=>{
+        let key='ZyZwXQsAyfGdBUukMtkc'
+        let secret='ltXEwZDWSKFvbcZwFxqldAcSSyjSlDel'
+        let search=document.getElementById('Artist_Name').value
+        document.getElementById('Artist_Name').value=''
+
+        let url='https://api.discogs.com/database/search?key='+key+'&secret='+secret+'&artist='+search+'&country=canada'
+        console.log(url)
+        fetch(url,
+            {
+                method: 'get',
+            }
+        )
+        .then((response)=>{
+
+            if (response.ok) {
+                response.json().then(json_response =>{
+                        console.log(json_response.results)
+                })
+            }else{
+
+            }
+        })
+    }
 
         render() {
             let arrayItems=this.state.music_albums.map((data,index) => {
                 return(
-                    <tr>
 
-                    <td>
+                    <tbody key={index}>
+                        <td >
                     {data.title}  <br/>
                     ID: {data.id}<br/>
                     Playlist :{data.playlist_id}<br/>
@@ -88,8 +112,9 @@ class Playlist extends React.Component {
                         <button onClick={()=>this.DeleteData(data.id)} >Delete </button>
                     </td>
 
-                    <br></br>
-                    </tr>
+
+                    </tbody>
+
                 )
             })
             return(
@@ -106,7 +131,16 @@ class Playlist extends React.Component {
                        {arrayItems}
 
                    </table>
+
+
                </div>
+               </div>
+
+               <div className='API'>
+               <h4>Music Provided By Discogs.com  </h4>
+               <h5>Search By Artist <input type="text" id='Artist_Name' /> Candian releases only</h5>
+
+               <button onClick={()=>this.SearchDataThroughAPI()} >Search </button>
                </div>
 
 

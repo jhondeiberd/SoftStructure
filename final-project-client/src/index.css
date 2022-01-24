@@ -33,6 +33,14 @@ p {
     margin: 2% 0% 15% 0%;
 }
 
+.API {
+    padding: 2% 2% 2% 1%;
+    border: 2px solid black;
+
+    width: 40%;
+    border-radius: 15px;
+    margin: 2% 0% 15% 3%;
+}
 
 table, th, td {
 
