@@ -33,7 +33,7 @@ app.get('/', function (req, res) {
     res.end('<h1>My PlayList</h1>')
 })
 
-// Show all offices
+// Show all tracks
 app.get('/track', (req, res) => {
     const DB = require('./src/dao')
     DB.connect()
@@ -45,7 +45,7 @@ app.get('/track', (req, res) => {
             res.end(trackJSONString) // send out the JSON data string
         } else {
             // set content type
-            const tracksJSON = { msg: 'Table empty, no offices found' }
+            const tracksJSON = { msg: 'Table empty, no tracks found' }
             const trackJSONString = JSON.stringify(tracksJSON, null, 4)
             res.writeHead(404, { 'Content-Type': 'application/json' })
             // send out a string
@@ -55,63 +55,31 @@ app.get('/track', (req, res) => {
     })
 })
 
-// // Show office by ID
-// app.get('/offices/:id', (req, res) => {
-//     const id = req.params.id
-//     const DB = require('./src/dao')
-//     DB.connect()
-//     DB.queryParams('SELECT * from offices WHERE officecode=$1', [id],
-//         function (offices) {
-//             if (offices.rowCount === 1) {
-//                 const officesJSON = { msg: 'OK', offices: offices.rows[0] }
-//                 const officesJSONString = JSON.stringify(officesJSON, null, 4)
-//                 // set content type
-//                 res.writeHead(200, { 'Content-Type': 'application/json' })
-//                 // send out a string
-//                 res.end(officesJSONString)
-//             } else {
-//                 // set content type
-//                 const officesJSON = { msg: 'Office not found' }
-//                 const officesJSONString = JSON.stringify(officesJSON, null, 4)
-//                 res.writeHead(404, { 'Content-Type': 'application/json' })
-//                 // send out a string
-//                 res.end(officesJSONString)
-//             }
-//             DB.disconnect()
-//         }
-//     )
-// })
+// Add a new track
+app.post('/track',
+    function (request, response) {
+        // get the form inputs from the body of the HTTP request
+        console.log(request.body)
+        const playlistId = request.body.playlist_id
+        const title = request.body.title
+        const uri = request.body.uri
+        const masterId = request.body.master_id
 
-// // Save a new office
-// app.post('/offices',
-//     function (request, response) {
-//         // get the form inputs from the body of the HTTP request
-//         console.log(request.body)
-//         const officecode = request.body.officecode
-//         const city = request.body.city
-//         const phone = request.body.phone
-//         const addressline1 = request.body.addressline1
-//         const addressline2 = request.body.addressline2
-//         const state = request.body.state
-//         const country = request.body.country
-//         const postalcode = request.body.postalcode
-//         const territory = request.body.territory
+        const DB = require('./src/dao')
+        DB.connect()
 
-//         const DB = require('./src/dao')
-//         DB.connect()
-
-//         DB.queryParams('INSERT INTO offices VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)',
-//             [officecode, city, phone, addressline1, addressline2, state, country, postalcode, territory], function (customers) {
-//                 const officesJSON = { msg: 'OK office added' }
-//                 const officesJSONString = JSON.stringify(officesJSON, null, 4)
-//                 // set content type
-//                 response.writeHead(200, { 'Content-Type': 'application/json' })
-//                 // send out a string
-//                 response.end(officesJSONString)
-//                 DB.disconnect()
-//             })
-//     }
-// )
+        DB.queryParams('INSERT INTO track VALUES ($1,$2,$3,$4)',
+            [playlistId, title, uri, masterId], function (tracks) {
+                const trackJSON = { msg: 'OK track added' }
+                const trackJSONString = JSON.stringify(trackJSON, null, 4)
+                // set content type
+                response.writeHead(200, { 'Content-Type': 'application/json' })
+                // send out a string
+                response.end(trackJSONString)
+                DB.disconnect()
+            })
+    }
+)
 
 // // Update an office
 // app.put('/offices/:officecode',
