@@ -27,6 +27,8 @@ class Playlist extends React.Component {
 
         this.setState({ dropdownValue: e.target.value });
       }
+
+
     componentDidMount() {
         fetch('http://localhost:8000/track')
         .then(
@@ -36,8 +38,8 @@ class Playlist extends React.Component {
                     response.json().then(json_response =>{
 
                         this.setState({
-                            music_albums:json_response.track,
-                            music_count: Object.keys(json_response.track).length,
+                            music_albums:json_response.tracks,
+                            music_count: Object.keys(json_response.tracks).length,
                             music_index : 0,
                             isLoaded : true,
                             error : null
