@@ -7,12 +7,6 @@ const app = express()
 const cors = require('cors')
 app.use(cors())
 
-app.listen(8000,
-    function () {
-        console.log('Node server listening on port 8000')
-    }
-)
-
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded())
 
@@ -37,7 +31,7 @@ app.get('/', function (req, res) {
 app.get('/track', (req, res) => {
     const DB = require('./src/dao')
     DB.connect()
-    DB.query('select * from track', (track) => {
+    DB.query('select * from track order by id asc', (track) => {
         if (track.rowCount > 0) {
             const trackJSON = { msg: 'All tracks', track: track.rows } // keep only the data records rows
             const trackJSONString = JSON.stringify(trackJSON, null, 4) // convert JSON to JSON data string
@@ -82,18 +76,24 @@ app.post('/track',
 )
 
 // DELETE
-app.delete('/track/:id', function (req, res) {
-    const id = req.params.id // read the :id value send in the URL
+app.delete('/track/:id', function (request, response) {
+    const id = request.params.id // read the :id value send in the URL
     const DB = require('./src/dao')
     DB.connect()
 
-    DB.queryParams('DELETE from track WHERE id=$1', [id], function (tracks) {
-        const trackJSON = { msg: 'OK track deleted' }
-        const trackJSONString = JSON.stringify(trackJSON, null, 4)
+    DB.queryParams('DELETE from track WHERE id=$1', [id], function (offices) {
+        const officesJSON = { msg: 'OK office deleted' }
+        const officesJSONString = JSON.stringify(officesJSON, null, 4)
         // set content type
-        res.writeHead(200, { 'Content-Type': 'application/json' })
+        response.writeHead(200, { 'Content-Type': 'application/json' })
         // send out a string
-        res.end(trackJSONString)
+        response.end(officesJSONString)
         DB.disconnect()
     })
 })
+
+app.listen(8000,
+    function () {
+        console.log('Node server listening on port 8000')
+    }
+)
