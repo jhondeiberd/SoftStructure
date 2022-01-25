@@ -31,7 +31,7 @@ app.get('/', function (req, res) {
 app.get('/track', (req, res) => {
     const DB = require('./src/dao')
     DB.connect()
-    DB.query('select * from track order by id asc', (track) => {
+    DB.query('select t.*, p.title as playlist_title FROM track t inner join playlist p on p.id = t.playlist_id order by id asc', (track) => {
         if (track.rowCount > 0) {
             const trackJSON = { msg: 'All tracks', track: track.rows } // keep only the data records rows
             const trackJSONString = JSON.stringify(trackJSON, null, 4) // convert JSON to JSON data string
