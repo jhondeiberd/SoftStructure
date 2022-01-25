@@ -16,7 +16,7 @@ code {
     display: inline-flex;
     width: 100%;
     margin: 1% 0% 1% 02%;
-    padding: 1px 0% 0% 1%;
+    padding: 1px 0% 5% 1%;
 
 }
 
@@ -30,13 +30,12 @@ p {
     margin: 2% 0% 0% 02%;
     width: 40%;
     border-radius: 15px;
-    margin: 2% 0% 15% 0%;
+
 }
 
 .API {
     padding: 2% 2% 2% 1%;
     border: 2px solid black;
-
     width: 40%;
     border-radius: 15px;
     margin: 2% 0% 15% 3%;
