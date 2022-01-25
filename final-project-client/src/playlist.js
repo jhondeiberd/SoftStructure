@@ -14,9 +14,8 @@ class Playlist extends React.Component {
         music_count : 0, // how many dresses in data array from server
         isLoaded : false,  // will be true after data have been received from server
         error : null ,      // no errors yet !
-        server_messgae:''
-
-
+        server_messgae:'',
+        discog_albums:[]
         }
     }
     componentDidMount() {
@@ -71,6 +70,10 @@ class Playlist extends React.Component {
 
     }
 
+    AddDataToPlayList=(id)=>{
+        console.log(id)
+    }
+
     SearchDataThroughAPI=()=>{
         let key='ZyZwXQsAyfGdBUukMtkc'
         let secret='ltXEwZDWSKFvbcZwFxqldAcSSyjSlDel'
@@ -89,22 +92,30 @@ class Playlist extends React.Component {
             if (response.ok) {
                 response.json().then(json_response =>{
                         console.log(json_response.results)
+                        if(Object.keys(json_response.results).length===0){
+                            this.setState({server_messgae:'Not Found'})
+                        }else{
+                            this.setState({
+                                discog_albums:json_response.results
+                            })
+                        }
+
                 })
             }else{
-
+                this.setState({server_messgae:'API error'})
             }
         })
     }
 
         render() {
-            let arrayItems=this.state.music_albums.map((data,index) => {
+            let dataBaseArrayItems=this.state.music_albums.map((data,index) => {
                 return(
 
                     <tbody key={index}>
                         <td >
                     {data.title}  <br/>
                     ID: {data.id}<br/>
-                    Playlist :{data.playlist_id}<br/>
+                    Playlist :{data.playlist_title}<br/>
                     <a href={data.uri}> {data.uri} </a>
                     </td>
 
@@ -117,6 +128,28 @@ class Playlist extends React.Component {
 
                 )
             })
+
+
+            let discordArrayItems=this.state.discog_albums.map((data,index) => {
+                return(
+                    <tbody key={index}>
+                    <td >
+                {data.label}  <br/>
+
+                ID: {data.master_id}<br/>
+                Playlist :{data.genre}<br/>
+                <a href={data.uri}> {data.uri} </a>
+                </td>
+
+                <td>
+                    <button onClick={()=>this.AddDataToPlayList(data.master_id)} > Add </button>
+                </td>
+
+
+                </tbody>
+                )
+
+            })
             return(
 
                 <div>
@@ -125,10 +158,10 @@ class Playlist extends React.Component {
 
                <div className='Playlist'>
                <h4>My Playlist</h4>
-               <div className='Table' >
+               <div className='' >
                    <table>
 
-                       {arrayItems}
+                       {dataBaseArrayItems}
 
                    </table>
 
@@ -138,9 +171,15 @@ class Playlist extends React.Component {
 
                <div className='API'>
                <h4>Music Provided By Discogs.com  </h4>
-               <h5>Search By Artist <input type="text" id='Artist_Name' /> Candian releases only</h5>
+               <pre><b>Search By Artist</b> <input type="text" id='Artist_Name' /><b> Candian releases only </b></pre>
 
-               <button onClick={()=>this.SearchDataThroughAPI()} >Search </button>
+               <button onClick={()=>this.SearchDataThroughAPI()} >Search </button><br/>
+
+               <div>
+
+                    {discordArrayItems}
+
+               </div>
                </div>
 
 
