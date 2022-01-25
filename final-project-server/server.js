@@ -49,20 +49,41 @@ app.get('/track', (req, res) => {
     })
 })
 
+// Show All Playlist
+app.get('/playlist', (req, res) => {
+    const DB = require('./src/dao')
+    DB.connect()
+    DB.query('select * from playlist order by id asc', (playlist) => {
+        if (playlist.rowCount > 0) {
+            const trackJSON = { msg: 'All tracks', track: playlist.rows } // keep only the data records rows
+            const trackJSONString = JSON.stringify(trackJSON, null, 4) // convert JSON to JSON data string
+            res.writeHead(200, { 'Content-Type': 'application/json' }) // set HTTP response content type for JSON
+            res.end(trackJSONString) // send out the JSON data string
+        } else {
+            // set content type
+            const tracksJSON = { msg: 'Table empty, no tracks found' }
+            const trackJSONString = JSON.stringify(tracksJSON, null, 4)
+            res.writeHead(404, { 'Content-Type': 'application/json' })
+            // send out a string
+            res.end(trackJSONString)
+        }
+        DB.disconnect()
+    })
+})
+
 // Add a new track
 app.post('/track',
     function (request, response) {
         // get the form inputs from the body of the HTTP request
         console.log(request.body)
-        const playlistId = request.body.playlist_id
+        const playlistId = Number(request.body.playlist_id)
         const title = request.body.title
         const uri = request.body.uri
         const masterId = request.body.master_id
-
         const DB = require('./src/dao')
         DB.connect()
 
-        DB.queryParams('INSERT INTO track VALUES ($1,$2,$3,$4)',
+        DB.queryParams('INSERT INTO track (playlist_id,title,uri,master_id) VALUES ($1,$2,$3,$4)',
             [playlistId, title, uri, masterId], function (tracks) {
                 const trackJSON = { msg: 'OK track added' }
                 const trackJSONString = JSON.stringify(trackJSON, null, 4)

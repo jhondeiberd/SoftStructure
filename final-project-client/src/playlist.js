@@ -15,17 +15,26 @@ class Playlist extends React.Component {
         isLoaded : false,  // will be true after data have been received from server
         error : null ,      // no errors yet !
         server_messgae:'',
-        discog_albums:[]
+        discog_albums:[],
+        playlist_album:[],
+        dropdownValue:0
         }
+        this.handleChange = this.handleChange.bind(this);
     }
+
+
+    handleChange(e) {
+
+        this.setState({ dropdownValue: e.target.value });
+      }
     componentDidMount() {
         fetch('http://localhost:8000/track')
         .then(
             (response)=> {
-                console.log(response)
+
                 if (response.ok) {
                     response.json().then(json_response =>{
-                        console.log(json_response.track)
+
                         this.setState({
                             music_albums:json_response.track,
                             music_count: Object.keys(json_response.track).length,
@@ -47,13 +56,16 @@ class Playlist extends React.Component {
                 }
             }
         )
+
+
+
     }
 
     DeleteData=(id)=>{
         //this.setState({[event.target.name]:event.target.value})
 
         let url='http://localhost:8000/track/'+ id
-        console.log(url)
+
         fetch(url,
             {
                 method: 'delete',
@@ -71,7 +83,45 @@ class Playlist extends React.Component {
     }
 
     AddDataToPlayList=(id)=>{
-        console.log(id)
+
+        this.setState( {'':this.state.discog_albums.splice(id,1) })
+
+        let playlist_id=this.state.dropdownValue
+
+
+        let title=this.state.discog_albums[id].title
+
+        let uri='http://www.discogs.com'+this.state.discog_albums[id].uri
+
+        let master_id=this.state.discog_albums[id].master_id
+
+        let playlist={
+            title:title,
+            playlist_id:playlist_id,
+            uri:uri,
+            master_id:master_id
+        }
+
+        console.log(playlist)
+        fetch('http://localhost:8000/track',
+            {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                    //'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(playlist)
+            }
+        )
+
+            .then((response) => {
+                if (response.ok) {
+                    this.setState({server_messgae:'Data Inserted'})
+                    this.componentDidMount()
+                } else {
+                    this.setState({server_messgae:'Data Error'})
+                }
+            })
     }
 
     SearchDataThroughAPI=()=>{
@@ -91,7 +141,7 @@ class Playlist extends React.Component {
 
             if (response.ok) {
                 response.json().then(json_response =>{
-                        console.log(json_response.results)
+
                         if(Object.keys(json_response.results).length===0){
                             this.setState({server_messgae:'Not Found'})
                         }else{
@@ -105,6 +155,23 @@ class Playlist extends React.Component {
                 this.setState({server_messgae:'API error'})
             }
         })
+
+        fetch('http://localhost:8000/playlist')
+        .then(
+            (response)=> {
+
+                if (response.ok) {
+                    response.json().then(json_response =>{
+
+                        this.setState({
+                            playlist_album:json_response.track
+                        })
+                    })
+                }
+            }
+        )
+
+
     }
 
         render() {
@@ -119,6 +186,7 @@ class Playlist extends React.Component {
                     <a href={data.uri}> {data.uri} </a>
                     </td>
 
+
                     <td>
                         <button onClick={()=>this.DeleteData(data.id)} >Delete </button>
                     </td>
@@ -129,20 +197,39 @@ class Playlist extends React.Component {
                 )
             })
 
+            let SelectItems=this.state.playlist_album.map((data,index)=>{
+                return(
+
+                    <option key={index} value={data.id}> {data.title}</option>
+                    )
+            })
 
             let discordArrayItems=this.state.discog_albums.map((data,index) => {
                 return(
                     <tbody key={index}>
                     <td >
-                {data.label}  <br/>
+                <b>{data.title}</b>  <br/>
+                <img src={data.cover_image} alt="Cover_Image" height='200px' width='200px' /><br/>
 
-                ID: {data.master_id}<br/>
-                Playlist :{data.genre}<br/>
-                <a href={data.uri}> {data.uri} </a>
+                Style :{data.style}<br/>
+                Format:{data.format}<br/>
+                ID: {data.id}<br/>
+                {data.country}-{data.year }<br/>
+                Master ID-{data.master_id}<br/>
+                <a href={data.uri}> {data.uri} </a><br/>
+
+                <a href={'http://www.discogs.com'+ data.uri} > More Information </a>
                 </td>
 
                 <td>
-                    <button onClick={()=>this.AddDataToPlayList(data.master_id)} > Add </button>
+                    Select your genre<br/>
+                    <select value={this.state.dropdownValue} onChange={this.handleChange} >
+                        {SelectItems}
+                    </select>
+                      </td>
+
+                <td>
+                    <button onClick={()=>this.AddDataToPlayList(index)} > Add </button>
                 </td>
 
 
@@ -177,7 +264,11 @@ class Playlist extends React.Component {
 
                <div>
 
-                    {discordArrayItems}
+
+                {discordArrayItems}
+
+
+
 
                </div>
                </div>
