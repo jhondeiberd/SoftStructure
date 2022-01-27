@@ -98,13 +98,13 @@ app.delete('/track/:id', function (request, response) {
     const DB = require('./src/dao')
     DB.connect()
 
-    DB.queryParams('DELETE from track WHERE id=$1', [id], function (offices) {
-        const officesJSON = { msg: 'OK office deleted' }
-        const officesJSONString = JSON.stringify(officesJSON, null, 4)
+    DB.queryParams('DELETE from track WHERE id=$1', [id], function (tracks) {
+        const trackJSON = { msg: 'OK track deleted' }
+        const trackJSONString = JSON.stringify(trackJSON, null, 4)
         // set content type
         response.writeHead(200, { 'Content-Type': 'application/json' })
         // send out a string
-        response.end(officesJSONString)
+        response.end(trackJSONString)
         DB.disconnect()
     })
 })
