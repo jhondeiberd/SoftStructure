@@ -11,18 +11,9 @@ input {
 td,
 th {
     border: 1px solid black;
-    font-size:xx-small
-    ;
 }
 
-button {
-    font-size:xx-small
-    ;
-}
-
-
-
-.Playlist {
+Playlist {
     padding: 2% 2% 2% 1%;
     border: 2px solid black;
     margin: 2% 0% 0% 02%;
