@@ -49,10 +49,7 @@ class Playlist extends React.Component {
                     response.json().then(json_response => {
                         this.setState({
                             isLoaded: false,
-                            error:json_response,
-                            office_data :{},
-                            office_index : 0,
-                            office_count:0
+
                         })
                     })
                 }
