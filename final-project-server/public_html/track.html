@@ -9,8 +9,9 @@
 <body>
     <div className='Playlist'>
         <h4>My Playlist</h4>
-        <button onclick="getTracks()">Get all</button><br>
-        <div id="trackslist">test</div>
+        Server message: <b><span id="status">Waiting user action</span></b><br>
+        <button onclick="getTracks()">Get all tracks</button><br>
+        <div id="trackslist"></div>
     </div>
 </body>
 
@@ -31,49 +32,23 @@
                 (res) => {
                     // TO DO how to handle code other than 200 because this gets
                     // executed in all cases
-                    let tracks = res.track;
+                    const tracks = res.track;
                     console.log(tracks)
                     let html = ''
                     html += '<table>'
                     for (let i = 0; i < tracks.length; i++) {
                         html += '<tr>'
-                        html += '<td>' + tracks[i].id + '</td>'
-                        // html += '<td>' + tracks[i].playlist_id + '</td>'
-                        // html += '<td>' + tracks[i].title + '</td>'
-                        // html += '<td>' + tracks[i].uri + '</td>'
-                        // html += '<td>' + tracks[i].master_id + '</td>'
+                        html += '<td>' + tracks[i].title + '<br/>' + 'id: ' + tracks[i].id + '<br/>' + 'playlist: ' + tracks[i].playlist_title + '<br/>' + tracks[i].uri + '<br/>' + tracks[i].master_id + '</td>'
                         html += '</tr>'
                     }
                     html += '</table>'
 
                     document.getElementById('trackslist').innerHTML = html
-                    document.getElementById('status').innerHTML = response.msg
+                    document.getElementById('status').innerHTML = res.msg
                 },
                 (error) => {
                     // only NO RESPONSE URL errors will trigger this code
                     document.getElementById('status').innerHTML = 'AJAX error: URL wrong or unreachable, see console'
-                }
-            )
-    }
-
-    function DeleteTrack() {
-        document.getElementById("status").innerHTML = "Waiting for server"
-        fetch("http://localhost:8000/track/" + document.getElementById('id').value,
-            {
-                method: 'DELETE'
-                //,body: JSON.stringify(someData)// data to send in the body of the request
-            }
-        )
-            .then(res => res.json())//here server sends JSON response
-            .then(
-                (res) => {
-                    // TO DO how to handle code other than 200 because this gets
-                    // exeucted in all cases
-                    document.getElementById("status").innerHTML = response.msg
-                },
-                (error) => {
-                    // only NO RESPONSE URL errors will trigger this code
-                    document.getElementById("status").innerHTML = "AJAX error: URL wrong or unreachable, see console"
                 }
             )
     }
