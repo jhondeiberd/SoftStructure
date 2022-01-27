@@ -36,10 +36,10 @@ class Playlist extends React.Component {
 
                 if (response.ok) {
                     response.json().then(json_response =>{
-
+                        console.log(json_response.track)
                         this.setState({
-                            music_albums:json_response.tracks,
-                            music_count: Object.keys(json_response.tracks).length,
+                            music_albums:json_response.track,
+                            music_count: Object.keys(json_response.track).length,
                             music_index : 0,
                             isLoaded : true,
                             error : null
