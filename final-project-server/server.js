@@ -1,11 +1,21 @@
 'use strict'
 
 const express = require('express')
+const secure = require('https')
 const app = express()
 
 // Use CORS to allow Ajax requests from other web sites
 const cors = require('cors')
 app.use(cors())
+const fs = require('fs')
+const privateKey = fs.readFileSync('privatekey.pem', 'utf8')
+const certificate = fs.readFileSync('publiccert.pem', 'utf8')
+
+const credentials = {
+    key: privateKey,
+    cert: certificate
+
+}
 
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded())
@@ -24,26 +34,26 @@ app.use(express.static('public_html'))
 //* * ROUTES ************************************************************/
 
 // Show all tracks
-app.get('/track', (req, res) => {
-    const DB = require('./src/dao')
-    DB.connect()
-    DB.query('select t.*, p.title as playlist_title FROM track t inner join playlist p on p.id = t.playlist_id order by id asc', (track) => {
-        if (track.rowCount > 0) {
-            const trackJSON = { msg: 'All tracks', track: track.rows } // keep only the data records rows
-            const trackJSONString = JSON.stringify(trackJSON, null, 4) // convert JSON to JSON data string
-            res.writeHead(200, { 'Content-Type': 'application/json' }) // set HTTP response content type for JSON
-            res.end(trackJSONString) // send out the JSON data string
-        } else {
-            // set content type
-            const tracksJSON = { msg: 'Table empty, no tracks found' }
-            const trackJSONString = JSON.stringify(tracksJSON, null, 4)
-            res.writeHead(404, { 'Content-Type': 'application/json' })
-            // send out a string
-            res.end(trackJSONString)
-        }
-        DB.disconnect()
-    })
-})
+// app.get('/track', (req, res) => {
+//     const DB = require('./src/dao')
+//     DB.connect()
+//     DB.query('select t.*, p.title as playlist_title FROM track t inner join playlist p on p.id = t.playlist_id order by id asc', (track) => {
+//         if (track.rowCount > 0) {
+//             const trackJSON = { msg: 'All tracks', track: track.rows } // keep only the data records rows
+//             const trackJSONString = JSON.stringify(trackJSON, null, 4) // convert JSON to JSON data string
+//             res.writeHead(200, { 'Content-Type': 'application/json' }) // set HTTP response content type for JSON
+//             res.end(trackJSONString) // send out the JSON data string
+//         } else {
+//             // set content type
+//             const tracksJSON = { msg: 'Table empty, no tracks found' }
+//             const trackJSONString = JSON.stringify(tracksJSON, null, 4)
+//             res.writeHead(404, { 'Content-Type': 'application/json' })
+//             // send out a string
+//             res.end(trackJSONString)
+//         }
+//         DB.disconnect()
+//     })
+// })
 
 // Show All Playlist
 app.get('/playlist', (req, res) => {
@@ -92,6 +102,15 @@ app.post('/track',
     }
 )
 
+app.get('/track',
+    function (request, response) {
+        response.statusCode = 200
+        response.setHeader('Content-Type', 'text/plain')
+        // get the form inputs from the body of the HTTP request
+        response.end('Hello World')
+    }
+)
+
 // DELETE
 app.delete('/track/:id', function (request, response) {
     const id = request.params.id // read the :id value send in the URL
@@ -108,9 +127,13 @@ app.delete('/track/:id', function (request, response) {
         DB.disconnect()
     })
 })
+const https = secure.createServer(credentials, app)
 
-app.listen(8000,
-    function () {
+https.listen(8000,
+    function (err) {
+        if (err) {
+            console.log('in')
+        }
         console.log('Node server listening on port 8000')
     }
 )

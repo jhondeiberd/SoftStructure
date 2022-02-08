@@ -11,4 +11,4 @@ DELETE  http://localhost:8000/track/123 HTTP/1.1
 
 ####
 
-GET  http://localhost:8000/playlist HTTP/1.1
+GET  http://localhost:8000/track HTTP/1.1
